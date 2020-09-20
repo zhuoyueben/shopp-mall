@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhuoyueben.gmail.manage.dao.PmsBaseAttrInfoDao">
+
+    <select id="getAttrValueByValueId" resultMap="PmsBaseAttrInfoListCheckBySkuMap" parameterType="string">
+        select
+        bi.id as bi_id,bv.id as bv_id,bi.*,bv.*
+        from
+        pms_base_attr_info bi
+        INNER JOIN pms_base_attr_value bv
+        on bi.id=bv.attr_id
+        where bv.id in (${attrValues})
+
+    </select>
+
+    <resultMap id="PmsBaseAttrInfoListCheckBySkuMap" type="com.zhuoyueben.gmail.entities.PmsBaseAttrInfo" autoMapping="true">
+        <result column="bi_id" property="id"></result>
+        <collection property="attrValueList" ofType="com.zhuoyueben.gmail.entities.PmsBaseAttrValue" autoMapping="true">
+            <result column="bv_id" property="id"></result>
+        </collection>
+    </resultMap>
+
+</mapper>
